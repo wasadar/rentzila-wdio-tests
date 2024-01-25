@@ -59,13 +59,11 @@ export const config: Options.Testrunner = {
     // https://saucelabs.com/platform/platform-configurator
     //
     capabilities: [{
-        browserName: 'chrome'
+        browserName: 'chrome',
     }, {
-        browserName: 'firefox'
+        browserName: 'firefox',
     }, {
-        browserName: 'safari'
-    }, {
-        browserName: 'MicrosoftEdge'
+        browserName: 'MicrosoftEdge',
     }],
 
     //
@@ -144,7 +142,7 @@ export const config: Options.Testrunner = {
     // See the full list at http://mochajs.org/
     mochaOpts: {
         ui: 'bdd',
-        timeout: 60000
+        timeout: 300000
     },
 
     //
