@@ -7,6 +7,10 @@ const Elements: string = '.RentzilaProposes_proposes_item__sY_h2';
 const CategoryName: string = '.RentzilaProposes_name__DTnwr';
 const PopUpContainer: string = '.RequestsPopup_container__J8leY';
 const PopUpCrossButton: string = '[data-testid="crossButton"]';
+const ConsultationForm: string = '.ConsultationForm_container__kwpRU';
+const OrderConsultationButton: string = 'button[type="submit"]';
+const ConsultationFormErrorMessage: string = '.ConsultationForm_error_message__jleeD';
+const ConsultationFormInputField: string = '.ConsultationForm_input__r8dGs';
 
 /**
  * sub page containing specific selectors and methods for a specific page
@@ -87,6 +91,34 @@ class MainPage extends HeaderAndFooter {
     }
 
     /**
+     * Returns a consultation form block as WebdriverIO element
+     */
+    public async consultation () {
+        return this.locator(ConsultationForm);
+    }
+
+    /**
+     * Returns an order consultation button as WebdriverIO element
+     */
+    public async order () {
+        return this.locator(OrderConsultationButton);
+    }
+
+    /**
+     * Returns order consultation form errors as array of the WebdriverIO elements
+     */
+    public async orderErrors () {
+        return this.multyLocator(ConsultationFormErrorMessage);
+    }
+
+    /**
+     * Returns order consultation form input fields as array of the WebdriverIO elements
+     */
+    public async orderInputs () {
+        return this.multyLocator(ConsultationFormInputField);
+    }
+
+    /**
     * Closes pop up windows
     * */
     public async closePopUp () {
@@ -139,6 +171,64 @@ class MainPage extends HeaderAndFooter {
     * */
     public async clickOnEquipment (index: number) {
         await this.click((await this.equipmentList())[index]);
+    }
+
+    /**
+    * Scrolls screen to consultation form block
+    * */
+    public async scrollToConsultation () {
+        await this.scroll(await this.consultation());
+    }
+
+    /**
+    * Clicks on order consultation button
+    * */
+    public async clickOnOrder () {
+        await this.click((await this.order()));
+    }
+
+    /**
+    * Checks the error of consultation order input field by it's index and error text
+    * @param index index of input field in their list
+    * */
+    public async checkOrderConsultationFieldError (index: number) {
+        return (await this.classes((await this.orderInputs())[index])).includes("ConsultationForm_error__F1NM0");
+    }
+
+    /**
+    * Checks the error of consultation order input field by it's index and error text
+    * @param index index of input field in their list
+    * @param error
+    * */
+    public async checkOrderConsultationFieldErrorValue (index: number, error: string) {
+        return await this.text((await this.orderErrors())[index]) == error;
+    }
+
+    /**
+    * Clicks on consultation order input field by it's index
+    * @param index index of input field in their list
+    * */
+    public async clickOnOrderConsultationField (index: number) {
+        await this.click((await this.orderInputs())[index]);
+    }
+
+    /**
+    * Clears consultation order input field by it's index
+    * @param index index of input field in their list
+    * */
+    public async clearOrderConsultationField (index: number) {
+        await this.clear((await this.orderInputs())[index]);
+    }
+
+    /**
+    * Fills consultation order input field by it's index
+    * @param index index of input field in their list
+    * @param value
+    * */
+    public async fillOrderConsultationField (index: number, value: string) {
+        await this.clickOnOrderConsultationField(index);
+        await this.clearOrderConsultationField(index);
+        await this.fill((await this.orderInputs())[index], value);
     }
 
     /**

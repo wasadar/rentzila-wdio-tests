@@ -120,6 +120,38 @@ export default class Page {
     }
 
     /**
+     * Fills input form by element with value
+     * @param element element
+     * @param value value
+     */
+    public async fill (element: WebdriverIO.Element, value: string) {
+        return await element.setValue(value);
+    }
+
+    /**
+     * Clears input form by element
+     * @param element element
+     */
+    public async clear (element: WebdriverIO.Element) {
+        return await element.clearValue();
+    }
+
+    /**
+     * Returns list of the classes of element
+     * @param element element
+     */
+    public async classes (element: WebdriverIO.Element) {
+        return (await element.getAttribute('class')).split(' ');
+    }
+
+    /**
+     * Accepts modal window
+     */
+    public async confirmModal () {
+        await browser.acceptAlert();
+    }
+
+    /**
      * Returns url
      */
     public async url () {

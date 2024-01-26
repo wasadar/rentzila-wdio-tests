@@ -2,13 +2,16 @@ import { expect } from '@wdio/globals';
 import MainPage from '../pageobjects/main.page.ts';
 import ProductsPage from '../pageobjects/products.page.ts';
 import ProductPage from '../pageobjects/product.page.ts';
-import Equipment from '../../equipment.ts';
+import Equipment from '../../helpers/equipment.ts';
+import { consultation, deleteConsultation, listConsultations } from '../../helpers/backend.ts';
 
 describe('Rentzila application', () => {
-    it('[APPROVED] Checking ""Послуги"" section on the main page', async () => {
+    beforeEach(async () => {
         await MainPage.fullscreen();
         await MainPage.open();
+    });
 
+    it('[APPROVED] Checking ""Послуги"" section on the main page', async () => {
         await MainPage.scrollToServices();
         let tabsNumber: number = (await MainPage.servicesTabs()).length;
         for (let tabIndex: number = 0; tabIndex < tabsNumber; tabIndex++) {
@@ -40,9 +43,6 @@ describe('Rentzila application', () => {
     });
 
     it('[APPROVED] Checking ""Спецтехніка"" section on the main page', async () => {
-        await MainPage.fullscreen();
-        await MainPage.open();
-
         await MainPage.scrollToEquipment();
         let tabsNumber: number = (await MainPage.equipmentTabs()).length;
         for (let tabIndex: number = 0; tabIndex < tabsNumber; tabIndex++) {
@@ -74,8 +74,6 @@ describe('Rentzila application', () => {
     });
 
     it('[APPROVED] Verify that all elements on the footer are displayed and all links are clickable', async () => {
-        await MainPage.fullscreen();
-        await MainPage.open();
         await MainPage.scrollToFooter();
         expect(await MainPage.checkFooter()).toBe(true);
         expect(await MainPage.checkAboutUs()).toBe(true);
@@ -105,6 +103,45 @@ describe('Rentzila application', () => {
         await MainPage.clickOnLogo();
         await MainPage.scrollToFooter();
         expect(await MainPage.checkEmail()).toBe(true);
+    });
+
+    it('[EDITED] Verify ""У Вас залишилися питання?"" form', async () => {
+        let name: string = "Test";
+        let phone: string = "+380506743060";
+
+        await MainPage.scrollToConsultation();
+        await MainPage.closePopUp();
+        await MainPage.clickOnOrder();
+        expect((await MainPage.checkOrderConsultationFieldErrorValue(0,"Поле не може бути порожнім")) &&
+        (await MainPage.checkOrderConsultationFieldErrorValue(1,"Поле не може бути порожнім")) &&
+        (await MainPage.checkOrderConsultationFieldError(0)) &&
+        (await MainPage.checkOrderConsultationFieldError(1))).toBe(true);
+        await MainPage.fillOrderConsultationField(0,name);
+        expect(await MainPage.checkOrderConsultationFieldError(0)).toBe(false);
+        await MainPage.fillOrderConsultationField(1,phone);
+        await MainPage.clearOrderConsultationField(0);
+        await MainPage.clickOnOrder();
+        expect(await MainPage.checkOrderConsultationFieldError(0)).toBe(true);
+        expect(await MainPage.checkOrderConsultationFieldError(1)).toBe(false);
+        await MainPage.clearOrderConsultationField(1);
+        await MainPage.fillOrderConsultationField(0,name);
+        await MainPage.fillOrderConsultationField(1,"+38063111111");
+        await MainPage.clickOnOrder();
+        expect((await MainPage.checkOrderConsultationFieldError(1)) &&
+        (await MainPage.checkOrderConsultationFieldErrorValue(0,"Телефон не пройшов валідацію"))).toBe(true);
+        await MainPage.clearOrderConsultationField(1);
+        await MainPage.fillOrderConsultationField(1,"+1 1111111111111");
+        await MainPage.clickOnOrder();
+        expect((await MainPage.checkOrderConsultationFieldError(1)) &&
+        (await MainPage.checkOrderConsultationFieldErrorValue(0,"Телефон не пройшов валідацію"))).toBe(true);
+        await MainPage.clearOrderConsultationField(1);
+        await MainPage.fillOrderConsultationField(1, phone);
+        await MainPage.clickOnOrder();
+        await MainPage.sleep(2000)
+        await MainPage.confirmModal();
+        let order: consultation = (await listConsultations()).pop();
+        expect(order.name == name && order.phone == phone).toBe(true);
+        expect(await deleteConsultation(order.id)).toBe(true); // clear database after test
     });
 })
 
