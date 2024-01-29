@@ -1,5 +1,5 @@
 import HeaderAndFooter from './header.and.footer.page.ts';
-import Equipment from '../../helpers/equipment.ts';
+import { Equipment } from '../../helpers/data.ts';
 
 const ServicesBlock: string = '.UnitCharacteristics_services_container__hSEbl';
 const ServicesList: string = '.UnitCharacteristics_service__aTyk2';

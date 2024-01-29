@@ -74,7 +74,7 @@ export default class Page {
 
     /**
     * Returns a text of the element
-    * @param element ancestor element
+    * @param element element
     * */
     public async text (element: WebdriverIO.Element) {
         return await element.getText();
@@ -156,5 +156,46 @@ export default class Page {
      */
     public async url () {
         return await browser.getUrl();
+    }
+
+    /**
+    * Hovers on the WebdriverIO element
+    * @param element element
+    * */
+    public async hover (element: WebdriverIO.Element) {
+        await element.moveTo();
+    }
+
+    /**
+    * Returns an element on the page by it's text
+    * @param text text that matches the element's text
+    * @param selector selector that matches the element
+    * */
+    public async getElementByText (text: string, selector: string = 'div') {
+        return (await $$(selector).filter(async el => await el.getText() === text))[0];
+    }
+
+    /**
+    * Returns an elements on the page by it's text
+    * @param text text that matches the element's text
+    * @param selector selector that matches the element
+    * */
+    public async getElementsByText (text: string, selector: string = 'div') {
+        return await $$(selector).filter(async el => await el.getText() === text);
+    }
+
+    /**
+     * Presses the "Enter" button
+     */
+    public async pressEnter () {
+        browser.keys("\uE007");
+    }
+
+    /**
+    * Returns a value of the input field
+    * @param element input field
+    * */
+    public async value (element: WebdriverIO.Element) {
+        return await element.getValue();
     }
 }

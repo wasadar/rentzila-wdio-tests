@@ -1,8 +1,9 @@
 import HeaderAndFooter from './header.and.footer.page.ts';
 
-const FirstProduct: string = 'a[href*="/unit/"]'; //'div[data-index="0"].slick-slide.slick-active.slick-current';
+const FirstProduct: string = 'a[href*="/unit/"]'; 
 const Filters: string = '.ResetFilters_selectedCategory___D1E6 p';
-
+const SearchResultLabel: string = '.MapPagination_count__c_dzg .MapPagination_count__c_dzg';
+const Pattern: RegExp = /^Знайдено \d+ оголошен.* на видимій території/;
 /**
  * sub page containing specific selectors and methods for a specific page
  */
@@ -19,6 +20,13 @@ class ProductsPage extends HeaderAndFooter {
      */
     public async filtersList () {
         return this.multyLocator(Filters);
+    }
+
+    /**
+     * Returns search result label as WebdriverIO element
+     */
+    public async searchResultLabel () {
+        return this.locator(SearchResultLabel);
     }
 
     /**
@@ -57,6 +65,20 @@ class ProductsPage extends HeaderAndFooter {
     * */
     public async openFirstProduct () {
         await this.click(await this.firstProduct());
+    }
+
+    /**
+     * Returns search result label as text
+     */
+    public async getSearchResultLabel () {
+        return this.text(await this.searchResultLabel());
+    }
+
+    /**
+     * Checks search result label
+     */
+    public async checkSearchResultLabel () {
+        return Pattern.test(await this.getSearchResultLabel());
     }
 
     /**
