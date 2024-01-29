@@ -229,6 +229,7 @@ describe('Rentzila application', () => {
             expect((await MainPage.checkCatalogDropDownElementType1("Спецтехніка")) && 
             (await MainPage.checkCatalogDropDownElementType1("Послуги"))).toBe(true);
             await MainPage.hoverOnCatalogDropDownElementType1("Спецтехніка");
+            await MainPage.sleep(2000);
             expect((await MainPage.checkCatalogDropDownElementType2("Будівельна техніка")) &&
             (await MainPage.checkCatalogDropDownElementType2("Комунальна техніка")) &&
             (await MainPage.checkCatalogDropDownElementType2("Сільськогосподарська техніка")) &&
@@ -252,6 +253,7 @@ describe('Rentzila application', () => {
             expect((await MainPage.checkCatalogDropDownElementType1("Спецтехніка")) && 
             (await MainPage.checkCatalogDropDownElementType1("Послуги"))).toBe(true);
             await MainPage.hoverOnCatalogDropDownElementType1("Послуги");
+            await MainPage.sleep(2000);
             expect((await MainPage.checkCatalogDropDownElementType2("Будівельні")) &&
             (await MainPage.checkCatalogDropDownElementType2("Інші")) &&
             (await MainPage.checkCatalogDropDownElementType2("Сільськогосподарські"))).toBe(true);
