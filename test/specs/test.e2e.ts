@@ -43,17 +43,18 @@ async function searchServiceOrCategory(value: string) {
 
 describe('Rentzila application', () => {
     beforeEach(async () => {
-        await MainPage.fullscreen();
         await MainPage.open();
     });
 
     it('[APPROVED] Checking ""Послуги"" section on the main page', async () => {
         await MainPage.scrollToServices();
         let tabsNumber: number = (await MainPage.servicesTabs()).length;
+
         for (let tabIndex: number = 0; tabIndex < tabsNumber; tabIndex++) {
             await MainPage.clickOnServicesTab(tabIndex);
             let serviceIndex: number = 0;
             let serviceName: string = '';
+
             while (true) {
                 await MainPage.closePopUp();
                 serviceName = await MainPage.getServiceNameByIndex(serviceIndex);
@@ -81,10 +82,12 @@ describe('Rentzila application', () => {
     it('[APPROVED] Checking ""Спецтехніка"" section on the main page', async () => {
         await MainPage.scrollToEquipment();
         let tabsNumber: number = (await MainPage.equipmentTabs()).length;
+
         for (let tabIndex: number = 0; tabIndex < tabsNumber; tabIndex++) {
             await MainPage.clickOnEquipmentTab(tabIndex);
             let categoryIndex: number = 0;
             let categoryName: string = '';
+
             while (true) {
                 await MainPage.closePopUp();
                 categoryName = await MainPage.getEquipmentNameByIndex(categoryIndex);
@@ -219,6 +222,7 @@ describe('Rentzila application', () => {
         let text: string;
         let length: number;
 
+        // Here I slightly changed the order of steps by checking reaction on hover before reaction on click process test case faster
         do {
             expect(await MainPage.checkCatalog()).toBe(true);
             await MainPage.clickOnCatalog();

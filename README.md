@@ -44,4 +44,9 @@ To run the automated tests using WebdriverIO, you can use the following npm scri
     npm run test:browser-name
     ```
 
+- Run the automated tests in the headless mode using WebdriverIO:
+```
+npm run test:browser-name:headless
+```
+
 Test were mostly oriented for running in chrome, so they may fail in other browsers.

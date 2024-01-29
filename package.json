@@ -14,8 +14,11 @@
   },
   "scripts": {
     "test:chrome": "cross-env CAPABILITIES=\"{\"\"browserName\"\": \"\"chrome\"\"}\" wdio wdio.conf.ts",
+    "test:chrome:headless": "cross-env CAPABILITIES=\"{\"\"browserName\"\": \"\"chrome\"\", \"\"goog:chromeOptions\"\": { \"\"args\"\": [\"\"headless\"\", \"\"disable-gpu\"\"]}}\" wdio wdio.conf.ts",
     "test:firefox": "cross-env CAPABILITIES=\"{\"\"browserName\"\": \"\"firefox\"\"}\" wdio wdio.conf.ts",
+    "test:firefox:headless": "cross-env CAPABILITIES=\"{\"\"browserName\"\": \"\"firefox\"\", \"\"moz:firefoxOptions\"\": { \"\"args\"\": [\"\"-headless\"\"]}}\" wdio wdio.conf.ts",
     "test:edge": "cross-env CAPABILITIES=\"{\"\"browserName\"\": \"\"msedge\"\"}\" wdio wdio.conf.ts",
+    "test:edge:headless": "cross-env CAPABILITIES=\"{\"\"browserName\"\": \"\"msedge\"\", \"\"ms:edgeOptions\"\": { \"\"args\"\": [\"\"--headless\"\"]}}\" wdio wdio.conf.ts",
     "test:safari": "cross-env CAPABILITIES=\"{\"\"browserName\"\": \"\"safari\"\"}\" wdio wdio.conf.ts"
   }
 }

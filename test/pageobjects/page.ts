@@ -97,13 +97,6 @@ export default class Page {
     }
 
     /**
-     * Open browser in fullscreen mode to prevent bugs
-     */
-    public async fullscreen () {
-        await browser.maximizeWindow();
-    }
-
-    /**
      * Checks if element is clickable
      * @param element element
      */
