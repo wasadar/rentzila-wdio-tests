@@ -19,6 +19,6 @@ jobs:
     - name: Run tests
       env:
         TOKEN: ${{ secrets.TOKEN }}
-        capabilities: '{"browserName": "chrome"}'
+        capabilities: '{"browserName": "chrome", "goog:chromeOptions": { "args": ["headless", "disable-gpu"]}}'
       run: npm run test:chrome:headless
       continue-on-error: true
