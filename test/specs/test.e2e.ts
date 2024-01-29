@@ -238,10 +238,10 @@ describe('Rentzila application', () => {
             await MainPage.hoverOnCatalogDropDownElementType2(text);
             expect(await MainPage.checkSubcategories(text,length)).toBe(true);
             await MainPage.clickOnCatalogDropDownElementType2(text);
-            await MainPage.sleep(1000);
+            await MainPage.sleep(2000);
             expect(await ProductsPage.checkFilters(text)).toBe(true);
             await MainPage.clickOnLogo();
-            await MainPage.sleep(1000);
+            await MainPage.sleep(2000);
         } while(++index < length);
         
         index = 0;
@@ -261,10 +261,10 @@ describe('Rentzila application', () => {
             expect(await MainPage.checkSubcategories(text,length)).toBe(true);
             text = await MainPage.getTextOfCatalogDropDownElementType2ByIndex(length);
             await MainPage.clickOnCatalogDropDownElementType2(text);
-            await MainPage.sleep(1000);
+            await MainPage.sleep(2000);
             expect(await ProductsPage.checkFilters(text)).toBe(true);
             await MainPage.clickOnLogo();
-            await MainPage.sleep(1000);
+            await MainPage.sleep(2000);
         } while(++index < length);
     });
 })
