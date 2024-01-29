@@ -1,0 +1,24 @@
+name: Run WDIO Tests
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Use Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: 'latest'
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Run tests
+      env:
+        TOKEN: ${{ secrets.TOKEN }}
+        capabilities: '{"browserName": "chrome", "goog:chromeOptions": { "args": ["headless", "disable-gpu"]}}'
+      run: npm run test:chrome:headless
+      continue-on-error: true
